@@ -19,9 +19,6 @@ export type ObjectMetaData = Record<string, string | number>;
 export type RequestHeaders = Record<string, string | boolean | number | undefined>;
 export type Encryption = {
   type: ENCRYPTION_TYPES.SSEC;
-  SSECustomerAlgorithm?: string;
-  SSECustomerKey?: string;
-  SSECustomerKeyMD5?: string;
 } | {
   type: ENCRYPTION_TYPES.KMS;
   SSEAlgorithm?: string;
