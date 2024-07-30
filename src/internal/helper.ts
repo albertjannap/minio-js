@@ -468,12 +468,18 @@ export const PART_CONSTRAINTS = {
 }
 
 const GENERIC_SSE_HEADER = 'X-Amz-Server-Side-Encryption'
+const SSEC_CUSTOMER_ALGORITHM = `${GENERIC_SSE_HEADER}-Customer-Algorithm`;
+const SSEC_CUSTOMER_KEY = `${GENERIC_SSE_HEADER}-Customer-Key`;
+const SSEC_CUSTOMER_KEY_MD5 = `${GENERIC_SSE_HEADER}-Customer-Key-MD5`;
 
 const ENCRYPTION_HEADERS = {
   // sseGenericHeader is the AWS SSE header used for SSE-S3 and SSE-KMS.
   sseGenericHeader: GENERIC_SSE_HEADER,
   // sseKmsKeyID is the AWS SSE-KMS key id.
   sseKmsKeyID: GENERIC_SSE_HEADER + '-Aws-Kms-Key-Id',
+  sseCCustomerAlgorithm: SSEC_CUSTOMER_ALGORITHM,
+  sseCCustomerKey: SSEC_CUSTOMER_KEY,
+  sseCCustomerKeyMd5: SSEC_CUSTOMER_KEY_MD5
 } as const
 
 /**
@@ -488,6 +494,9 @@ export function getEncryptionHeaders(encConfig: Encryption): RequestHeaders {
     if (encType === ENCRYPTION_TYPES.SSEC) {
       return {
         [ENCRYPTION_HEADERS.sseGenericHeader]: 'AES256',
+        [ENCRYPTION_HEADERS.sseCCustomerAlgorithm]: encConfig.SSECustomerAlgorithm,
+        [ENCRYPTION_HEADERS.sseCCustomerKey]: encConfig.SSECustomerKey,
+        [ENCRYPTION_HEADERS.sseCCustomerKeyMd5]: encConfig.SSECustomerKeyMD5,
       }
     } else if (encType === ENCRYPTION_TYPES.KMS) {
       return {
