@@ -26,6 +26,9 @@ export type RequestHeaders = Record<string, string | boolean | number | undefine
 export type Encryption =
   | {
       type: ENCRYPTION_TYPES.SSEC,
+      SSECustomerAlgorithm?: string
+      SSECustomerKey?: string
+      SSECustomerKeyMD5?: string
     }
   | {
       type: ENCRYPTION_TYPES.KMS

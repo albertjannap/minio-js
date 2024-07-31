@@ -251,7 +251,7 @@ export function isEmpty(o: unknown): o is null | undefined {
 }
 
 export function isEmptyObject(o: Record<string, unknown>): boolean {
-  return Object.values(o).filter((x) => x !== undefined).length !== 0
+  return Object.values(o).filter((x) => x !== undefined).length === 0
 }
 
 export function isDefined<T>(o: T): o is Exclude<T, null | undefined> {
@@ -494,6 +494,9 @@ export function getEncryptionHeaders(encConfig: Encryption): RequestHeaders {
     if (encType === ENCRYPTION_TYPES.SSEC) {
       return {
         [ENCRYPTION_HEADERS.sseGenericHeader]: 'AES256',
+        [ENCRYPTION_HEADERS.sseCCustomerAlgorithm]: encConfig.SSECustomerAlgorithm,
+        [ENCRYPTION_HEADERS.sseCCustomerKey]: encConfig.SSECustomerKey,
+        [ENCRYPTION_HEADERS.sseCCustomerKeyMd5]: encConfig.SSECustomerKeyMD5,
       }
     } else if (encType === ENCRYPTION_TYPES.KMS) {
       return {
